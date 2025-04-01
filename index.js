@@ -61,20 +61,27 @@ db.connect((err) => {
 app.get('/server-info', async (req, res) => {
   try {
     // Get instance ID from EC2 metadata service
+    var meta  = new AWS.MetadataService();
     let instanceId = 'unknown';
     let availabilityZone = 'unknown';
+    let test = 'zero'
 
     try {
       // EC2 metadata is available at a special IP address from within EC2
       instanceId = await axios.get('http://169.254.169.254/latest/meta-data/instance-id');
 
       availabilityZone = await axios.get('http://169.254.169.254/latest/meta-data/placement/availability-zone');
+      meta.request("/latest/meta-data/instance-id", function(err, data){
+        test = data;
+      });
+      
     } catch (error) {
       console.log('Not running on EC2 or metadata service not available');
     }
 
     // Return server info
     res.json({
+      test: test,
       instanceId: instanceId,
       responsedata: responsedata,
       hostname: os.hostname(),
