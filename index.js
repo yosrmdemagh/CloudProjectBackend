@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+const axios = require('axios');
+const os = require('os');
 require('dotenv').config();
 
 const app = express();
@@ -56,6 +58,41 @@ db.connect((err) => {
 
 
 // Routes
+app.get('/server-info', async (req, res) => {
+  try {
+    // Get instance ID from EC2 metadata service
+    let instanceId = 'unknown';
+    let availabilityZone = 'unknown';
+
+    try {
+      // EC2 metadata is available at a special IP address from within EC2
+      instanceId = await axios.get('http://169.254.169.254/latest/meta-data/instance-id', {
+        timeout: 2000 // Set a timeout in case this is running locally
+      });
+
+      availabilityZone = await axios.get('http://169.254.169.254/latest/meta-data/placement/availability-zone', {
+        timeout: 2000
+      });
+    } catch (error) {
+      console.log('Not running on EC2 or metadata service not available');
+    }
+
+    // Return server info
+    res.json({
+      instanceId: instanceId,
+      availabilityZone: availabilityZone,
+      hostname: os.hostname(),
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching server info:', error);
+    res.status(500).json({ error: 'Failed to get server information' });
+  }
+});
+
+app.get('/', (req, res) => {
+  res.status(200).json('Hello from Backend app!');
+});
 
 app.get('/', (req, res) => {
   res.status(200).json('Hello from Backend app!');
