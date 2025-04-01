@@ -69,8 +69,6 @@ app.get('/server-info', async (req, res) => {
       instanceId = await axios.get('http://169.254.169.254/latest/meta-data/instance-id');
 
       availabilityZone = await axios.get('http://169.254.169.254/latest/meta-data/placement/availability-zone');
-
-      responsedata = await axios.get('http://169.254.169.254/latest/dynamic/instance-identity/document')
     } catch (error) {
       console.log('Not running on EC2 or metadata service not available');
     }
@@ -78,7 +76,6 @@ app.get('/server-info', async (req, res) => {
     // Return server info
     res.json({
       instanceId: instanceId,
-      availabilityZone: availabilityZone,
       responsedata: responsedata,
       hostname: os.hostname(),
       timestamp: new Date().toISOString()
