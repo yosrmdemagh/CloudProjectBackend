@@ -56,6 +56,11 @@ db.connect((err) => {
 
 
 // Routes
+
+app.get('/', (req, res) => {
+  res.status(200).json('Hello from Backend app!');
+});
+
 app.get('/api/users', (req, res) => {
   const query = 'SELECT * FROM users';
 
@@ -149,6 +154,15 @@ app.delete('/api/users/:id', (req, res) => {
 });
 
 // Start server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+});
+
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
 });
