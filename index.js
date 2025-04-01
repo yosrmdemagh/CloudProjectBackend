@@ -12,10 +12,10 @@ app.use(express.json());
 
 // Database connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'databasebackend.cysrpetj7pax.us-east-1.rds.amazonaws.com',
+  host: process.env.DB_HOST || 'databasetest.cysrpetj7pax.us-east-1.rds.amazonaws.com',
   user: process.env.DB_USER || 'admin',
   password: process.env.DB_PASSWORD || 'alaadmin',
-  database: process.env.DB_NAME || 'databasebackend'
+  database: process.env.DB_NAME || 'databasetest'
 });
 
 db.connect((err) => {
