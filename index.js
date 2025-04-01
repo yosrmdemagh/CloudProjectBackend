@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -55,37 +54,8 @@ db.connect((err) => {
 });
 
 
-// Fetch EC2 Instance Metadata
-async function getInstanceMetadata() {
-  try {
-    const instanceId = await axios.get('http://169.254.169.254/latest/meta-data/instance-id');
-    const availabilityZone = await axios.get('http://169.254.169.254/latest/meta-data/placement/availability-zone');
 
-    return {
-      instanceId: instanceId.data,
-      availabilityZone: availabilityZone.data
-    };
-  } catch (error) {
-    console.error('❌ Error fetching instance metadata:', error);
-    return { instanceId: 'Unknown', availabilityZone: 'Unknown' };
-  }
-}
-
-// API to get server info
-app.get('/api/server-info', async (req, res) => {
-  const metadata = await getInstanceMetadata();
-  res.json(metadata);
-});
 // Routes
-
-
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
-});
 
 app.get('/', (req, res) => {
   res.status(200).json('Hello from Backend app!');
