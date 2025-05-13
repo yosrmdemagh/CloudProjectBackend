@@ -14,9 +14,9 @@ app.use(express.json());
 
 // Database connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'databasetest.cysrpetj7pax.us-east-1.rds.amazonaws.com',
+  host: process.env.DB_HOST || 'database-1.cnsyy0yegxzn.us-east-1.rds.amazonaws.com',
   user: process.env.DB_USER || 'admin',
-  password: process.env.DB_PASSWORD || 'alaadmin',
+  password: process.env.DB_PASSWORD || 'Yosr2002yosr',
   database: process.env.DB_NAME || 'databasetest'
 });
 
@@ -58,6 +58,7 @@ db.connect((err) => {
 
 
 // Routes
+/*
 app.get('/server-info', async (req, res) => {
   try {
     // Get instance ID from EC2 metadata service
@@ -88,14 +89,12 @@ app.get('/server-info', async (req, res) => {
     res.status(500).json({ error: 'Failed to get server information' });
   }
 });
+*/
 
 app.get('/', (req, res) => {
   res.status(200).json('Hello from Backend app!');
 });
 
-app.get('/', (req, res) => {
-  res.status(200).json('Hello from Backend app!');
-});
 
 app.get('/api/users', (req, res) => {
   const query = 'SELECT * FROM users';
