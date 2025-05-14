@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Database connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'database-1.cnsyy0yegxzn.us-east-1.rds.amazonaws.com',
+  host: process.env.DB_HOST || 'database-4.cnsyy0yegxzn.us-east-1.rds.amazonaws.com',
   user: process.env.DB_USER || 'admin',
   password: process.env.DB_PASSWORD || 'Yosr2002yosr',
   database: process.env.DB_NAME || 'databasetest'
@@ -189,9 +189,10 @@ app.delete('/api/users/:id', (req, res) => {
 });
 
 // Start server
-const server = app.listen(port, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
 });
+
 
 
 // Handle graceful shutdown
