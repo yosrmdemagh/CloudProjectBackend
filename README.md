@@ -13,7 +13,7 @@ This guide explains how to **set up a Node.js app**, **configure environment var
 2. **Clone your Node.js project**
 
    ```bash
-   git clone https://github.com/alaabenhmida/backend.git
+   git clone https://github.com/yosrmdemagh/CloudProjectBackend.git
    cd backend
    npm install
    ```
